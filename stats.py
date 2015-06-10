@@ -54,7 +54,8 @@ def parse_output(morfologik_output, words_dictionary):
   parts_of_sentence = {}
   data = re.findall(ur"^([a-zA-ZżółćęśąźńŻÓŁĆĘŚĄŹŃ-]+)\s+([a-zA-ZżółćęśąźńŻÓŁĆĘŚĄŹŃ -]+)\s+([a-zA-ZżółćęśąźńŻÓŁĆĘŚĄŹŃ0-9:+-.]+)$", unicode(morfologik_output, "utf-8"), re.DOTALL|re.MULTILINE)
   for item in data:
-    part = item[2].split(":")[0]
+    forms = item[2].split(":")
+    part = forms[2] if len(forms) > 2 else "undefined"
     if item[0] in words_dictionary:
       if part not in parts_of_sentence:
         parts_of_sentence[part] = words_dictionary[item[0]]
